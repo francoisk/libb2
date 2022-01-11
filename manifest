@@ -1,8 +1,8 @@
 : 1
 name: libb2
 
-# @@ TMP Can't tell whether they use semver because there are only two
-#    releases (0.98, 0.98.1).
+# Note that it's unclear whether upstream uses semver semantically because
+# so far there were only two releases (0.98, 0.98.1).
 #
 version: 0.98.1-a.0.z
 
