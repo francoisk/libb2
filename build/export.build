@@ -1,6 +1,6 @@
 $out_root/
 {
-  include src/
+  include libb2/
 }
 
-export $out_root/src/$import.target
+export $out_root/libb2/$import.target
