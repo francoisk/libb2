@@ -1,0 +1,10 @@
+: 1
+name: libb2
+version: 0.1.0-a.0.z
+summary: b2 C library
+license: CC0-1.0
+url: https://example.org/libb2
+email: francois@codesynthesis.com
+#build-error-email: francois@codesynthesis.com
+depends: * build2 >= 0.14.0
+depends: * bpkg >= 0.14.0
