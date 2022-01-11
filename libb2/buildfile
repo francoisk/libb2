@@ -1,0 +1,73 @@
+using autoconf
+
+# BLAKE2 algorithms:
+#
+#   BLAKE2b: successor of BLAKE-512
+#   BLAKE2s: successor of BLAKE-256
+#
+# Upstream source files:
+#
+#   blake2b.c:     Optimized implementation of BLAKE2b
+#   blake2s.c:     Optimized implementation of BLAKE2s
+#   blake2b-ref.c: Reference (unoptimized) implementation of BLAKE2b
+#   blake2s-ref.c: Reference (unoptimized) implementation of BLAKE2s
+#   blake2bp.c:    Parallel version of BLAKE2b
+#   blake2sp.c:    Parallel version of BLAKE2s
+#
+lib{b2}: src/h{*} h{blake2-config} src/c{blake2bp blake2sp}
+
+# Build options and source file selection based on optimization.
+#
+# The value of the SUFFIX macro is appended to function names in the upstream
+# "fat binary" configuration which is disabled by default, so define it to be
+# empty.
+#
+c.poptions += "-I$out_root/libb2" "-I$src_root/libb2" \
+              -DHAVE_CONFIG_H -DSUFFIX=
+
+# BLAKE2_DLL is defined when building or using the shared library and
+# BLAKE2_DLL_EXPORTS only when building the shared library.
+#
+if ($c.target.class == 'windows')
+  {hbmis objs}{*}: c.poptions += -DBLAKE2_DLL -DBLAKE2_DLL_EXPORTS
+
+# Given that Intel started supporting SSE4.2 in 2008 and AVX2 in 2013, and AMD
+# started supporting AVX2 in 2015, assume MMX, SSE up to 4.2, and AVX is
+# available on all i686 and x86_64 CPUs and all supported compilers, in which
+# case build the CPU-optimized implementations of the BLAKE2
+# algorithms. Otherwise build the reference implementations.
+#
+if ($c.target.cpu == 'x86_64' || $c.target.cpu == 'i686')
+{
+  lib{b2}: src/c{blake2b blake2s}
+
+  if ($c.class != 'msvc')
+    c.coptions += -mmmx -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx
+}
+else
+  lib{b2}: src/c{blake2b-ref blake2s-ref}
+
+# Generate blake2-config.h.
+#
+h{blake2-config}: in{blake2-config}
+
+# Export options.
+#
+lib{b2}: c.export.poptions += "-I$out_root/libb2/src" "-I$src_root/libb2/src"
+
+if ($c.target.class == 'windows')
+  libs{b2}: c.export.poptions += -DBLAKE2_DLL
+
+# For pre-releases use the complete version to make sure they cannot be used
+# in place of another pre-release or the final version. See the version module
+# for details on the version.* variable values.
+#
+if $version.pre_release
+  lib{b2}: bin.lib.version = "-$version.project_id"
+else
+  lib{b2}: bin.lib.version = "-$version.major.$version.minor"
+
+# Install into, say, /usr/include/.
+#
+h{*}:                 install = false
+src/h{blake2}@./src/: install = include/

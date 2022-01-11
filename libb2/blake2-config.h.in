@@ -1,0 +1,45 @@
+#pragma once
+#ifndef __BLAKE2_CONFIG_H__
+#define __BLAKE2_CONFIG_H__
+
+#undef STDC_HEADERS
+
+#undef HAVE_STDLIB_H
+
+#undef HAVE_EXPLICIT_BZERO
+
+#undef HAVE_EXPLICIT_MEMSET
+
+#undef HAVE_SSE
+
+#undef HAVE_SSE2
+
+#undef HAVE_SSE3
+
+#undef HAVE_SSSE3
+
+#undef HAVE_SSE4_1
+
+#undef HAVE_SSE4_2
+
+#undef HAVE_XOP
+
+#undef HAVE_AVX
+
+#undef BYTE_ORDER
+
+#if BYTE_ORDER == LITTLE_ENDIAN
+#  define NATIVE_LITTLE_ENDIAN 1
+#endif
+
+#ifdef HAVE_XOP
+#  ifndef HAVE_AVX
+#    define HAVE_AVX
+#  endif
+#endif
+
+#ifndef HAVE_SSE2
+#  error "This code requires at least SSE2."
+#endif
+
+#endif
