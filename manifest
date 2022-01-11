@@ -1,0 +1,19 @@
+: 1
+name: libb2
+
+# @@ TMP Can't tell whether they use semver because there are only two
+#    releases (0.98, 0.98.1).
+#
+version: 0.98.1-a.0.z
+
+summary: C library providing BLAKE2b, BLAKE2s, BLAKE2bp, BLAKE2sp
+license: CC0-1.0
+description-file: README.md
+url: https://blake2.net
+src-url: https://github.com/BLAKE2/libb2
+package-url: https://github.com/build2-packaging/libb2
+email: contact@blake2.net
+package-email: packaging@build2.org ; Mailing list.
+build-error-email: builds@build2.org
+depends: * build2 >= 0.14.0
+depends: * bpkg >= 0.14.0
