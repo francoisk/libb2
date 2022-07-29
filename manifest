@@ -4,7 +4,7 @@ name: libb2
 # Note that it's unclear whether upstream uses semver semantically because
 # so far there were only two releases (0.98, 0.98.1).
 #
-version: 0.98.1
+version: 0.98.1+1
 
 summary: C library providing BLAKE2b, BLAKE2s, BLAKE2bp, BLAKE2sp
 license: CC0-1.0
@@ -15,5 +15,5 @@ package-url: https://github.com/build2-packaging/libb2
 email: contact@blake2.net
 package-email: packaging@build2.org ; Mailing list.
 build-error-email: builds@build2.org
-depends: * build2 >= 0.14.0
-depends: * bpkg >= 0.14.0
+depends: * build2 >= 0.15.0
+depends: * bpkg >= 0.15.0

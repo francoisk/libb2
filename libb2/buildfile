@@ -16,7 +16,22 @@ using autoconf
 #
 lib{b2}: src/h{*} h{blake2-config} src/c{blake2bp blake2sp}
 
-# Build options and source file selection based on optimization.
+# Given that Intel started supporting SSE4.2 in 2008 and AVX2 in 2013, and AMD
+# started supporting AVX2 in 2015, assume MMX, SSE up to 4.2, and AVX is
+# available on all i686 and x86_64 CPUs and all supported compilers, in which
+# case build the CPU-optimized implementations of the BLAKE2
+# algorithms. Otherwise build the reference implementations.
+#
+optimize = ($c.target.cpu == 'x86_64' || $c.target.cpu == 'i686')
+
+lib{b2}: src/c{blake2b blake2s}:         include = $optimize
+lib{b2}: src/c{blake2b-ref blake2s-ref}: include = (!$optimize)
+
+# Generate blake2-config.h.
+#
+h{blake2-config}: in{blake2-config}
+
+# Build options.
 #
 # The value of the SUFFIX macro is appended to function names in the upstream
 # "fat binary" configuration which is disabled by default, so define it to be
@@ -31,25 +46,8 @@ c.poptions += "-I$out_root/libb2" "-I$src_root/libb2" \
 if ($c.target.class == 'windows')
   {hbmis objs}{*}: c.poptions += -DBLAKE2_DLL -DBLAKE2_DLL_EXPORTS
 
-# Given that Intel started supporting SSE4.2 in 2008 and AVX2 in 2013, and AMD
-# started supporting AVX2 in 2015, assume MMX, SSE up to 4.2, and AVX is
-# available on all i686 and x86_64 CPUs and all supported compilers, in which
-# case build the CPU-optimized implementations of the BLAKE2
-# algorithms. Otherwise build the reference implementations.
-#
-if ($c.target.cpu == 'x86_64' || $c.target.cpu == 'i686')
-{
-  lib{b2}: src/c{blake2b blake2s}
-
-  if ($c.class != 'msvc')
-    c.coptions += -mmmx -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx
-}
-else
-  lib{b2}: src/c{blake2b-ref blake2s-ref}
-
-# Generate blake2-config.h.
-#
-h{blake2-config}: in{blake2-config}
+if ($optimize && $c.class != 'msvc')
+  c.coptions += -mmmx -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx
 
 # Export options.
 #
