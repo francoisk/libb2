@@ -44,9 +44,3 @@
 |*test*|🔴 `failure` [`(log)`](https://build2.org)|
 
 ----------------
-
-<table>
-  <tr><th>name</th><td><code>libb2</td></tr>
-  <tr><th>version</th><td>2.5.0-b.26.20240429111726.b62164b756ba</td></tr>
-  <tr></tr>
-</table>
