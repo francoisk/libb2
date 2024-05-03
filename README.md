@@ -6,9 +6,9 @@
 |*target*|`x86_64-linux-gnu`|
 |*target config*|`linux_ubuntu_22.04-gcc_11-bindist`|
 |*package config*|`multi`|
-|*configure*|🟢 `success` [`(log)`](https://build2.org)|
-|*update*|🟠 `warning` [`(log)`](https://build2.org)|
-|*test*|🔴 `failure` [`(log)`](https://build2.org)|
+|*configure*|🟢 `success` ([log](https://build2.org))|
+|*update*|🟠 `warning` ([log](https://build2.org))|
+|*test*|🔴 `failure` ([log](https://build2.org))|
 
 
 --------------------
