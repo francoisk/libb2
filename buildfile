@@ -1,4 +1,4 @@
-# MASTER XXXXXX
+# MASTER XXXXXXX
 
 ./: {*/ -build/ -upstream/} doc{README.md} legal{COPYING} manifest
 
