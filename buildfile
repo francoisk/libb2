@@ -6,4 +6,4 @@
 #
 tests/: install = false
 
-# QQQQQQQAAA555555Z
+# QQQQQQQAAA555555ZQ
