@@ -105,7 +105,7 @@ main ()
   if (!test_blake2sp ())
     return 4;
 
-  return 5;
+  return 0;
 }
 
 // Define the tables copied from upstream/src/blake2-kat.h.
