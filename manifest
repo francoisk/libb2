@@ -14,10 +14,7 @@ src-url: https://github.com/BLAKE2/libb2
 package-url: https://github.com/build2-packaging/libb2
 email: contact@blake2.net
 # package-email: packaging@build2.org ; Mailing list.
-one-builds: all
-two-builds: all
-one-build-exclude: **/aarch64-linux-gnu
-two-build-exclude: **/aarch64-linux-gnu
+build-exclude: **/aarch64-linux-gnu
 depends: * build2 >= 0.15.0
 depends: * bpkg >= 0.15.0
 
